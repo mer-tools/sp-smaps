@@ -2,11 +2,9 @@ Name:       sp-smaps
 Summary:    Utilities for collecting whole system SMAPS data
 Version:    0.4.2.2
 Release:    1
-Group:      Development/Tools
 License:    GPLv2
-URL:        https://github.com/mer-tools/sp-smaps
+URL:        https://github.com/sailfishos/sp-smaps
 Source0:    %{name}-%{version}.tar.gz
-BuildRequires:  python
 BuildRequires:  libsysperf-devel
 
 %description
@@ -14,27 +12,24 @@ Utilities for collecting whole system SMAPS data and post-processing the informa
 
 %package doc
 Summary:   Documentation for %{name}
-Group:     Documentation
+BuildArch: noarch
 Requires:  %{name} = %{version}-%{release}
 
 %description doc
 Man pages for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}
+%autosetup -n %{name}-%{version}
 
 %build
 # building is done in during install. Empty build section to avoid rpmlint warning
 
 %install
-rm -rf %{buildroot}
-make install DESTDIR=%{buildroot}
-
-mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
-install -m0644 README.txt %{buildroot}%{_docdir}/%{name}-%{version}
+%make_install
 
 %files
 %defattr(-,root,root,-)
+%license COPYING
 %{_bindir}/sp_smaps_analyze
 %{_bindir}/sp_smaps_appvals
 %{_bindir}/sp_smaps_diff
@@ -52,9 +47,8 @@ install -m0644 README.txt %{buildroot}%{_docdir}/%{name}-%{version}
 %{_datadir}/sp-smaps-visualize/jquery.min.js
 %{_datadir}/sp-smaps-visualize/jquery.tablesorter.js
 %{_datadir}/sp-smaps-visualize/tablesorter.css
-%license COPYING
 
 %files doc
 %defattr(-,root,root,-)
+%doc README.txt
 %{_mandir}/man1/sp_smaps*
-%{_docdir}/%{name}-%{version}
